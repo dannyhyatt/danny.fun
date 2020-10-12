@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Coolest Placeholder on the internet</title>
+<style>
+* {
+    font-family: mono;
+}
+a { 
+    color: unset;
+}
+</style>
+</head>
+<body>
+
+<span id="typed"></span>
+<div style="display: none;" id="typed-strings">
+<span id='cross-out' class='strike'>welcome to the coolest website on the internet.</span>
+    <p>
+	// todo<br>
+	in the meaning, check out my personal website,
+	<a href="https://dannyhyatt.com">dannyhyatt.com</a><br>
+	seizure warning: you will have a seizure if you don't leave in the next three seconds
+    </p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+
+<script>
+var typed = new Typed('#typed', {
+    stringsElement: '#typed-strings',
+    typeSpeed: 75,
+    startDelay: 25,
+    backspaceDelay: 450,
+    loop: false
+});
+
+setTimeout(function() {
+    setInterval(function() {
+	var r = Math.random() * 255;
+	var g = Math.random() * 255;
+	var b = Math.random() * 255;
+	document.body.style.backgroundColor = 'rgb(' + r + ', ' + g + ', ' + b + ')';
+	document.body.style.color = 'rgb(' + (255-r) + ', ' + (255-g) + ', ' + (255-b) + ')';
+    }, 50);
+}, 26000);
+</script>
+
+</body>
+</html>
