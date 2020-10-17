@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>3D Snake</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <style>
+
+    #game-container {
+      height: 50vh;
+      width: 50vh;
+      margin-left: auto;
+      margin-right: auto;
+      transform-style: preserve-3d;
+      position: relative;
+    }
+
+    #game {
+      position: relative;
+      height: 50vh;
+      width: 50vh;
+      /* background-color: #ddd; */
+      margin-top: 20vh;
+      transform-style: preserve-3d;
+      transition: all 0.4s ease-out;
+    }
+
+    .plane {
+      height: 50vh;
+      width: 50vh;
+      z-index: 999;
+      position: absolute;
+      opacity: 0.6;
+      border: 1px solid black;
+    }
+
+    .x-axis {
+      transform:  rotateX(91deg);
+      background-image: linear-gradient(#f00, #800);
+    }
+
+    .y-axis {
+      transform: rotateY(91deg);
+      background-image: linear-gradient(#ff0, #880);
+    }
+
+    .z-axis {
+      transform: rotateZ(90deg);
+      background-image: linear-gradient(#00f, #008);
+    }
+
+    .cube {
+      transform-style: preserve-3d;
+      position: relative;
+    }
+
+    .cube div {
+      height: 2.5vh;
+      width: 2.5vh;
+      z-index: 1000;
+      position: absolute;
+      opacity: 0.8;
+      border: 2px solid black;
+      transform-style: preserve-3d;
+      background-color: #0f0;
+    }
+
+    /* bottom */
+    .cube div:nth-child(1) {
+      transform: translateZ(1.25vh) translateY(1.25vh) rotateX(90deg);
+    }
+    /* back */
+    .cube div:nth-child(2) {
+      /* transform: translateZ(-1.25vh) rotateX(90deg); */
+    }
+    /* top */
+    .cube div:nth-child(3) {
+      transform: translateZ(1.25vh) translateY(-1.25vh) rotateX(90deg);
+    }
+    /* left */
+    .cube div:nth-child(4) {
+      transform: translateZ(1.25vh) translateX(-1.25vh) rotateY(90deg);
+    }
+    /* right */
+    .cube div:nth-child(5) {
+      /* background-color: blue; */
+      transform: translateZ(1.25vh) translateX(1.25vh) rotateY(90deg);
+    }
+    /* right */
+    .cube div:nth-child(6) {
+      /* background-color: yellow; */
+      transform: translateZ(2.5vh);
+    }
+
+    .food {
+      transform-style: preserve-3d;
+      position: relative;
+    }
+
+    .food div {
+      height: 2.5vh;
+      width: 2.5vh;
+      z-index: 1000;
+      position: absolute;
+      opacity: 0.8;
+      border: 2px solid black;
+      transform-style: preserve-3d;
+      background-color: #f00;
+    }
+
+    /* bottom */
+    .food div:nth-child(1) {
+      transform: translateZ(1.25vh) translateY(1.25vh) rotateX(90deg);
+    }
+    /* back */
+    .food div:nth-child(2) {
+      /* transform: translateZ(-1.25vh) rotateX(90deg); */
+    }
+    /* top */
+    .food div:nth-child(3) {
+      transform: translateZ(1.25vh) translateY(-1.25vh) rotateX(90deg);
+    }
+    /* left */
+    .food div:nth-child(4) {
+      transform: translateZ(1.25vh) translateX(-1.25vh) rotateY(90deg);
+    }
+    /* right */
+    .food div:nth-child(5) {
+      /* background-color: blue; */
+      transform: translateZ(1.25vh) translateX(1.25vh) rotateY(90deg);
+    }
+    /* right */
+    .food div:nth-child(6) {
+      /* background-color: yellow; */
+      transform: translateZ(2.5vh);
+    }
+
+  </style>
+</head>
+<body>
+  <div id="game-container">
+  <div id="game">
+
+    <div class="plane x-axis"></div>
+    <div class="plane y-axis"></div>
+    <div class="plane z-axis"></div>
+
+    <div class="food"></div>
+
+  </div>
+</div>
+
+  <script>
+
+  var pX = 0, pY = 0, pZ = 0;
+  var clock;
+
+
+
+  var offsetX = 0, startX;
+  var offsetY = 0, startY;
+  var elem = document.getElementById('game-container');
+  document.getElementById('game').addEventListener('mousedown', function (e) {
+      startX = e.clientX - offsetX;
+      startY = e.clientY - offsetY;
+  })
+  document.getElementById('game').addEventListener('mouseup', function() {
+      startX = null;
+      startY = null;
+  })
+  document.getElementById('game').addEventListener('mousemove', function (e) {
+      if(startX && startY) {
+          offsetX = e.clientX - startX;
+          offsetY = e.clientY - startY;
+          elem.style['-webkit-transform'] = 'rotateX(' + -offsetY + 'deg) rotateY(' + offsetX + 'deg)';
+      }
+  });
+
+  document.body.onkeypress = function(evt) {
+
+    if(clock==null) {
+      clock = setInterval(nextFrame, 500);
+    }
+
+    // perspective changes
+    // alert(evt.keyCode);
+    // if(evt.keyCode==113) {
+    //   pY -= 1;
+    // }
+    // if(evt.keyCode==119) {
+    //   pX += 1;
+    // }
+    // if(evt.keyCode==101) {
+    //   pZ += 1;
+    // }
+    // if(evt.keyCode==97) {
+    //   pY += 1;
+    // }
+    // if(evt.keyCode==115) {
+    //   pX -= 1;
+    // }
+    // if(evt.keyCode==100) {
+    //   pZ -= 1;
+    // }
+    //
+    // document.getElementById('game').style.transform = 'rotateX(' + (pX) + 'deg) rotateY(' + (pY) + 'deg) rotateZ(' + (pZ) + 'deg)';
+
+    // direction changes
+    if(evt.keyCode==113) {
+      if(dY == 1) dY = 0;
+      else dY = 1;
+    }
+    if(evt.keyCode==119) {
+      if(dX == 1) dX = 0;
+      else dX = 1;
+    }
+    if(evt.keyCode==101) {
+      if(dZ == 1) dZ = 0;
+      else dZ = 1;
+    }
+    if(evt.keyCode==97) {
+      dY = -1;
+    }
+    if(evt.keyCode==115) {
+      dX = -1;
+    }
+    if(evt.keyCode==100) {
+      dZ = -1;
+    }
+
+  }
+
+  // directions
+  var dX = 0, dY = 0, dZ = 0;
+  // snake body
+  var bX = [0], bY = [0], bZ = [0];
+
+  // food coords
+  var fX, fY, fZ;
+  var addFood = true;
+
+  function nextFrame() {
+    checkCollision();
+    advanceCoords();
+    render();
+    food();
+  }
+
+  function checkCollision() { // checks for eating and body collisions
+
+      // check food collisions
+      if(bX[0] == fX && bY[0] == fY && bZ[0] == fZ) {
+        addTail();
+        addFood = true;
+        alert('collision!');
+      }
+
+      // todo check body collisions
+
+  }
+
+  function addTail() {
+    bX.push(bX[bX.length-1]*dX);
+    bY.push(bY[bY.length-1]*dY);
+    bZ.push(bZ[bZ.length-1]*dZ);
+  }
+
+  function food() {
+    if(addFood) {
+      document.getElementsByClassName('food')[0].remove();
+      fX = randCoord();
+      fY = randCoord();
+      fZ = randCoord();
+      addCube(fX, fY, fZ, true);
+      addFood = false;
+    }
+  }
+
+  function randCoord() {
+    return Math.floor(Math.random() * 10);
+  }
+
+  function render() {
+    // todo rewrite so it just moves the last to the front
+    var cubes = document.getElementsByClassName('cube');
+    for(var i = 0; i < cubes.length; i++) {
+      cubes[i].remove();
+    }
+
+    for(var i = 0; i < bX.length; i++) {
+      addCube(bX[i], bY[i], bZ[i], false);
+    }
+  }
+
+  function advanceCoords() {
+    for(var i = 0; i < bX.length; i++) {
+      bX[i] += dX;
+      if(bX[i] > 9 || bX[i] < -9) bX[i] = -bX[i];
+      bY[i] += dY;
+      if(bY[i] > 9 || bY[i] < -9) bY[i] = -bY[i];
+      bZ[i] += dZ;
+      if(bZ[i] > 9 || bZ[i] < -9) bZ[i] = -bZ[i];
+    }
+    // todo check for walls
+  }
+
+  function addCube(x,y,z,isFood) {
+    var food = 'cube';
+    if(isFood) food = 'food';
+    document.getElementById('game').innerHTML += `
+        <div class="` + food + `">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>`;
+      document.getElementById('game').children[document.getElementById('game').children.length-1].style.transform = 'translate3d('+((x+10)*2.5)+'vh, '+((-y+10)*2.5)+'vh, '+z*2.5+'vh)';
+  }
+
+  </script>
+</body>
+</html>

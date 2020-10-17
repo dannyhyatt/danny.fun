@@ -4,49 +4,68 @@
 <title>The Coolest Placeholder on the internet</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
-<style>
-* {
-    font-family: "Courier New", Courier, monospace, mono;
-}
-a { 
-    color: unset;
-}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="/css/all.css" rel="stylesheet">
 </head>
 <body>
 
-<span id="typed"></span>
-<div style="display: none;" id="typed-strings">
-<span id='cross-out' class='strike'>welcome to the coolest website on the internet.</span>
-    <p>
-	// todo<br>
-	in the mean time, check out my personal website,
-	<a href="https://dannyhyatt.com">dannyhyatt.com</a><br>
-	seizure warning: you will have a seizure if you don't leave in the next three seconds
-    </p>
-</div>
+
+  <div class="content">
+    <div class="header" style="height: 3em">
+      <span id="typed"></span>
+      <div style="display: none;" id="typed-strings">
+          <p>
+            # danny.fun<br>
+            <span style="font-size: 20px; position: relative">re-explore the known</span>
+          </p>
+      </div>
+    </div>
+
+    <div class="tiles">
+
+      <div class="tile" id="snake">
+        <a class="title" href="/3d-snake">CSS 3D Snake</a>
+      </div>
+
+      <div class="tile" id="everest">
+        <a class="title">Scroll Mt. Everest</a>
+      </div>
+
+    </div>
+  </div>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
 
 <script>
 var typed = new Typed('#typed', {
     stringsElement: '#typed-strings',
-    typeSpeed: 75,
-    startDelay: 25,
+    typeSpeed: 33,
+    startDelay: 50,
     backspaceDelay: 450,
-    loop: false
+    loop: false,
+    onComplete: function(f) {
+      document.getElementsByClassName('typed-cursor--blink')[0].innerHTML = '';
+    }
 });
 
+  // setTimeout(function() {
+  //     setInterval(function() {
+  // 	var r = Math.random() * 255;
+  // 	var g = Math.random() * 255;
+  // 	var b = Math.random() * 255;
+  // 	document.body.style.backgroundColor = 'rgb(' + r + ', ' + g + ', ' + b + ')';
+  // 	document.body.style.color = 'rgb(' + (255-r) + ', ' + (255-g) + ', ' + (255-b) + ')';
+  //     }, 50);
+  // }, 26000);
+
 setTimeout(function() {
-    setInterval(function() {
-	var r = Math.random() * 255;
-	var g = Math.random() * 255;
-	var b = Math.random() * 255;
-	document.body.style.backgroundColor = 'rgb(' + r + ', ' + g + ', ' + b + ')';
-	document.body.style.color = 'rgb(' + (255-r) + ', ' + (255-g) + ', ' + (255-b) + ')';
-    }, 50);
-}, 26000);
+  document.getElementById('searchbox').focus();
+}, 2900);
+
 </script>
+
 
 </body>
 </html>

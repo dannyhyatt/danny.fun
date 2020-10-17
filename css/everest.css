@@ -1,0 +1,20 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 348348in;
+  background-image: linear-gradient(red, blue, 90deg);
+}
+
+.ruler div {
+  margin-top: 1in;
+}
+
+.ruler {
+  position: absolute;
+  right: 0;
+  text-align: right;
+}
+
+.counter {
+  position: fixed;
+}
