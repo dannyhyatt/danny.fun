@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>3D Snake</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <style>
 
@@ -178,7 +179,7 @@
   document.body.onkeypress = function(evt) {
 
     if(clock==null) {
-      clock = setInterval(nextFrame, 500);
+      clock = setInterval(nextFrame, 250);
     }
 
     // perspective changes
@@ -218,13 +219,16 @@
       else dZ = 1;
     }
     if(evt.keyCode==97) {
-      dY = -1;
+      if(dY == -1) dY = 0;
+      else dY = -1;
     }
     if(evt.keyCode==115) {
-      dX = -1;
+      if(dX == -1) dX = 0;
+      else dX = -1;
     }
     if(evt.keyCode==100) {
-      dZ = -1;
+      if(dZ == -1) dZ = 0;
+      else dZ = -1;
     }
 
   }
@@ -239,9 +243,9 @@
   var addFood = true;
 
   function nextFrame() {
-    checkCollision();
     advanceCoords();
     render();
+    checkCollision();
     food();
   }
 
@@ -292,13 +296,14 @@
   }
 
   function advanceCoords() {
+    if(dX == 0 && dY == 0 && dX) return;
     for(var i = 0; i < bX.length; i++) {
+      if(bX[i] > 8 || bX[i] < -9) bX[i] = -bX[i];
       bX[i] += dX;
-      if(bX[i] > 9 || bX[i] < -9) bX[i] = -bX[i];
+      if(bY[i] > 8 || bY[i] < -9) bY[i] = -bY[i];
       bY[i] += dY;
-      if(bY[i] > 9 || bY[i] < -9) bY[i] = -bY[i];
+      if(bZ[i] > 8 || bZ[i] < -9) bZ[i] = -bZ[i];
       bZ[i] += dZ;
-      if(bZ[i] > 9 || bZ[i] < -9) bZ[i] = -bZ[i];
     }
     // todo check for walls
   }

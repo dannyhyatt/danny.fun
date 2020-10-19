@@ -97,7 +97,7 @@ a:hover {
 .tile {
   width: 44%;
   max-width: 550px;
-  min-width: 350px;
+  min-width: 250px;
   height: 200px;
   display: flex;
   flex-direction: row;
@@ -109,6 +109,19 @@ a:hover {
   border-radius: 5px;
 }
 
+@media only screen and (max-width: 850px) {
+  .tile {
+    width: 100%;
+  }
+  .content {
+    min-width: 350px;
+    width: 80%;
+  }
+  .header {
+    font-size: 1.5rem;
+  }
+}
+
 .tile .title {
   background-color: white;
   padding: 10px;
@@ -116,6 +129,20 @@ a:hover {
   align-self: center;
   margin-left: auto;
   margin-right: auto;
+}
+
+.tile:hover {
+  animation: 0.1s background-move linear infinite alternate;
+  animation-fill-mode: forwards;
+}
+
+@keyframes background-move {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 10px 0%;
+  }
 }
 
 #snake {
