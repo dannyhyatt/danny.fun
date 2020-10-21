@@ -1,0 +1,108 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  margin-top: auto;
+}
+
+.slide {
+  display: none;
+  transition: 0.5s;
+  animation: 0.5s fade linear;
+  animation-fill-mode: forwards;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 100%;
+  }
+  100% {
+    opacity: 0%;
+  }
+}
+
+:target {
+  display: flex!important;
+  z-index: 1000;
+  animation: 0.5s fade linear;
+  animation-direction: reverse;
+}
+
+.description {
+  margin-left: 20%;
+  display: block;
+  text-align: left;
+}
+
+.neutron {
+  background-image:radial-gradient(circle at 0.4em 0.4em, #666, #aaa);
+  background-color: grey;
+}
+
+.atomic {
+  display: inline-block;
+  border-radius: 50%;
+  height: 0.8em;
+  width: 0.8em;
+  margin: 0;
+}
+
+.anim-typewriter{
+  animation: typewriter 4s steps(44) 1s 1 normal both,
+             blinkTextCursor 500ms steps(44) infinite normal;
+}
+
+.type {
+  position: relative;
+}
+
+.cursor {
+  z-index: 10001;
+  background-color: white;
+  animation: cursor 10s steps(39);
+  position: absolute;
+  animation-fill-mode: forwards;
+}
+
+@keyframes cursor {
+  from {
+    right: 0;
+    width: 39em;
+    height: 1em;
+  }
+  to {
+    right: auto;
+    width: 0;
+    height: 1em;
+  }
+  99% {
+    opacity: 1;
+  }
+  99.99% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes typewriter{
+  from{width: 0;}
+  to{width: 24em;}
+}
+@keyframes blinkTextCursor{
+  from{border-right-color: rgba(255,255,255,.75);}
+  to{border-right-color: transparent;}
+}

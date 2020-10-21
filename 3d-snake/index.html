@@ -163,15 +163,35 @@
   document.getElementById('game').addEventListener('mousedown', function (e) {
       startX = e.clientX - offsetX;
       startY = e.clientY - offsetY;
-  })
+  });
+  document.getElementById('game').addEventListener('touchstart', function (e) {
+    e.preventDefault();
+    console.log('start');
+      startX = e.touches[0].clientX - offsetX;
+      startY = e.touches[0].clientY - offsetY;
+  });
   document.getElementById('game').addEventListener('mouseup', function() {
       startX = null;
       startY = null;
-  })
+  });
+  document.getElementById('game').addEventListener('touchcancel', function() {
+      startX = null;
+      startY = null;
+  });
   document.getElementById('game').addEventListener('mousemove', function (e) {
       if(startX && startY) {
           offsetX = e.clientX - startX;
           offsetY = e.clientY - startY;
+          elem.style['-webkit-transform'] = 'rotateX(' + -offsetY + 'deg) rotateY(' + offsetX + 'deg)';
+      }
+  });
+  document.getElementById('game').addEventListener('touchmove', function (e) {
+    e.preventDefault();
+    console.log('gogogo' );
+      if(startX && startY) {
+        console.log("!");
+          offsetX = e.touches[0].clientX - startX;
+          offsetY = e.touches[0].clientY - startY;
           elem.style['-webkit-transform'] = 'rotateX(' + -offsetY + 'deg) rotateY(' + offsetX + 'deg)';
       }
   });

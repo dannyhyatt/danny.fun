@@ -132,8 +132,8 @@ a:hover {
 }
 
 .tile:hover {
-  animation: 0.1s background-move linear infinite alternate;
-  animation-fill-mode: forwards;
+  animation: 0.25s background-move linear infinite alternate;
+  animation-fill-mode: both;
 }
 
 @keyframes background-move {
